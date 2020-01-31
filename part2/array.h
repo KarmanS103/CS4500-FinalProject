@@ -13,7 +13,6 @@ class Array : public Object
 public:
     Object** array_;
     size_t a_size_;
-    size_t length_;
 
 
     /**
@@ -25,7 +24,6 @@ public:
     {
         array_= new Object*[size];
         a_size_ = size;
-        length_ = 0;
     }
 
     /**
@@ -42,14 +40,6 @@ public:
     size_t size()
     {
         return a_size_;
-    }
-
-    /**
-     * Returns the number of Objects in the array.
-     */
-    size_t length()
-    {
-        return length_;
     }
 
     /**
@@ -72,7 +62,6 @@ public:
         size_t current_size = a_size_;
         allocate_space();
         array_[current_size] = obj;
-        length_++;
     }
 
     /**
@@ -89,12 +78,7 @@ public:
         if (index == a_size_) {
             allocate_space();
         }
-        if (array_[index]) { 
-            delete array_[index];
-            length_--;
-        }
         array_[index] = obj;
-        length_++;
     
     } 
 
@@ -111,7 +95,6 @@ public:
         if (array_[index]) {
             Object* result = array_[index];
             array_[index] = NULL;
-            length_--;
             return result;
         }
         return NULL;
@@ -139,7 +122,7 @@ public:
     bool equals(Object *other)
     {
         Array* o = dynamic_cast<Array*>(other);
-        if (o && o->length() == this->length()) {
+        if (o) {
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
@@ -176,7 +159,6 @@ class StringArray : public Object
 public:
     String** array_;
     size_t a_size_;
-    size_t length_;
 
 
     /**
@@ -188,7 +170,6 @@ public:
     {
         array_= new String*[size];
         a_size_ = size;
-        length_ = 0;
     }
 
     /**
@@ -205,14 +186,6 @@ public:
     size_t size()
     {
         return a_size_;
-    }
-
-    /**
-     * Returns the number of Objects in the array.
-     */
-    size_t length()
-    {
-        return length_;
     }
 
     /**
@@ -235,7 +208,6 @@ public:
         size_t current_size = a_size_;
         allocate_space();
         array_[current_size] = obj;
-        length_++;
     }
 
     /**
@@ -252,12 +224,7 @@ public:
         if (index == a_size_) {
             allocate_space();
         }
-        if (array_[index]) { 
-            delete array_[index];
-            length_--;
-        }
         array_[index] = obj;
-        length_++;
     } 
 
     /**
@@ -273,7 +240,6 @@ public:
         if (array_[index]) {
             String* result = array_[index];
             array_[index] = NULL;
-            length_--;
             return result;
         }
         return NULL;
@@ -300,7 +266,7 @@ public:
     bool equals(Object *other)
     {
         StringArray* o = dynamic_cast<StringArray*>(other);
-        if (o && o->length() == this->length()) {
+        if (o) {
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
@@ -333,7 +299,6 @@ class IntArray : public Object
 public:
     int* array_;
     size_t a_size_;
-    size_t length_;
 
 
     /**
@@ -345,7 +310,6 @@ public:
     {
         array_= new int[size];
         a_size_ = size;
-        length_ = 0;
     }
 
     /**
@@ -362,14 +326,6 @@ public:
     size_t size()
     {
         return a_size_;
-    }
-
-    /**
-     * Returns the number of Objects in the array.
-     */
-    size_t length()
-    {
-        return length_;
     }
 
     /**
@@ -392,7 +348,6 @@ public:
         size_t current_size = a_size_;
         allocate_space();
         array_[current_size] = obj;
-        length_++;
     }
 
     /**
@@ -409,11 +364,7 @@ public:
         if (index == a_size_) {
             allocate_space();
         }
-        if (array_[index]) { 
-            length_--;
-        }
         array_[index] = obj;
-        length_++;
     } 
 
     /**
@@ -426,7 +377,6 @@ public:
         if (array_[index]) {
             int result = array_[index];
             array_[index] = NULL;
-            length_--;
             return result;
         }
         return NULL;
@@ -440,10 +390,10 @@ public:
      */
     int get(size_t index)
     {
-        if (index < a_size_) {
-            return array_[index];
+        if (index >= a_size_) {
+            exit(1);
         }
-        exit(1);
+        return array_[index];
     }
 
     /**
@@ -454,7 +404,7 @@ public:
     bool equals(Object *other)
     {
         IntArray* o = dynamic_cast<IntArray*>(o);
-        if (o && o->length() == this->length()) {
+        if (o) {
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
@@ -487,7 +437,6 @@ class FloatArray : public Object
 public:
     float* array_;
     size_t a_size_;
-    size_t length_;
 
 
     /**
@@ -499,7 +448,6 @@ public:
     {
         array_= new float[size];
         a_size_ = size;
-        length_ = 0;
     }
 
     /**
@@ -516,14 +464,6 @@ public:
     size_t size()
     {
         return a_size_;
-    }
-
-    /**
-     * Returns the number of Objects in the array.
-     */
-    size_t length()
-    {
-        return length_;
     }
 
     /**
@@ -546,7 +486,6 @@ public:
         size_t current_size = a_size_;
         allocate_space();
         array_[current_size] = obj;
-        length_++;
     }
 
     /**
@@ -563,11 +502,7 @@ public:
         if (index == a_size_) {
             allocate_space();
         }
-        if (array_[index]) { 
-            length_--;
-        }
         array_[index] = obj;
-        length_++;
     } 
 
     /**
@@ -580,7 +515,6 @@ public:
         if (array_[index]) {
             float result = array_[index];
             array_[index] = NULL;
-            length_--;
             return result;
         }
         return NULL;
@@ -608,7 +542,7 @@ public:
     bool equals(Object *other)
     {
         FloatArray* o = dynamic_cast<FloatArray*>(o);
-        if (o && o->length() == this->length()) {
+        if (o) {
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
@@ -641,7 +575,6 @@ class BoolArray : public Object
 public:
     bool* array_;
     size_t a_size_;
-    size_t length_;
 
 
     /**
@@ -653,7 +586,6 @@ public:
     {
         array_= new bool[size];
         a_size_ = size;
-        length_ = 0;
     }
 
     /**
@@ -670,14 +602,6 @@ public:
     size_t size()
     {
         return a_size_;
-    }
-
-    /**
-     * Returns the number of Objects in the array.
-     */
-    size_t length()
-    {
-        return length_;
     }
 
     /**
@@ -700,7 +624,6 @@ public:
         size_t current_size = a_size_;
         allocate_space();
         array_[current_size] = obj;
-        length_++;
     }
 
     /**
@@ -717,11 +640,7 @@ public:
         if (index == a_size_) {
             allocate_space();
         }
-        if (array_[index]) { 
-            length_--;
-        }
         array_[index] = obj;
-        length_++;
     } 
 
     /**
@@ -734,7 +653,6 @@ public:
         if (array_[index]) {
             bool result = array_[index];
             array_[index] = NULL;
-            length_--;
             return result;
         }
         return NULL;
@@ -762,7 +680,7 @@ public:
     bool equals(Object *other)
     {
         BoolArray* o = dynamic_cast<BoolArray*>(o);
-        if (o && o->length() == this->length()) {
+        if (o) {
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
