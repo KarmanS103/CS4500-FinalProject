@@ -2,6 +2,7 @@
 #include "object.h"
 #include "string.h"
 #include <stdlib.h>
+#include <math.h>
 
 /**
  * Array: this class represents an array of Objects or Strings
@@ -94,10 +95,10 @@ public:
         }
         if (array_[index]) {
             Object* result = array_[index];
-            array_[index] = nullptr;
+            array_[index] = NULL;
             return result;
         }
-        return nullptr;
+        return NULL;
         
     }
 
@@ -239,10 +240,10 @@ public:
         }
         if (array_[index]) {
             String* result = array_[index];
-            array_[index] = nullptr;
+            array_[index] = NULL;
             return result;
         }
-        return nullptr;
+        return NULL;
     }
 
     /**
@@ -376,10 +377,10 @@ public:
     {
         if (array_[index]) {
             int result = array_[index];
-            array_[index] = nullptr;
+            array_[index] = NULL;
             return result;
         }
-        return nullptr;
+        return NULL;
         
     }
 
@@ -408,7 +409,6 @@ public:
             size_t o_size = o->size();
             size_t counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                printf("%d, %d\n", this->array_[counter], o->get(counter));
                 if (this->array_[counter] != o->array_[counter]) {
                     return false;
                 }
@@ -515,10 +515,10 @@ public:
     {
         if (array_[index]) {
             float result = array_[index];
-            array_[index] = nullptr;
+            array_[index] = NULL;
             return result;
         }
-        return nullptr;
+        return NULL;
         
     }
 
@@ -527,7 +527,7 @@ public:
      * 
      * @arg index  the index of the Object being returned
      */
-     float get(size_t index)
+    float get(size_t index)
     {
         if (index < a_size_) {
             return array_[index];
@@ -653,10 +653,10 @@ public:
     {
         if (array_[index]) {
             bool result = array_[index];
-            array_[index] = nullptr;
+            array_[index] = NULL;
             return result;
         }
-        return nullptr;
+        return NULL;
         
     }
 
