@@ -34,19 +34,35 @@ void testStringArray() {
 
 	StringArray* sa1 = new StringArray(1);
 	StringArray* sa2 = new StringArray(1);
+	StringArray* sa3 = new StringArray(1);
 
 	sa1->add(0, s1);
 	sa2->add(0, s1);
+
 	assert(sa1->equals(sa2));
+	assert(sa1->hash() == sa2->hash());
 	assert(sa1->size() == 1);
 	assert(sa1->get(0)->equals(s1));
+
 	sa1->add(0, s2);
+	sa3->add(0, s2);
+	
 	assert(sa1->size() == 1);
 	assert(!sa1->equals(sa2));
+
 	sa1->add(1, s1);
+	sa3->add(1, s1);
+
+	assert(sa1->hash() == sa2->hash());
 	assert(sa1->size() == 2);
 	assert(sa1->get(0)->equals(s2));
 	assert(sa1->get(1)->equals(s1));
+	sa1->pushback(s3);
+	assert(sa1->size() == 4);
+	assert(sa1->get(2)->equals(s3));
+
+	sa1->remove(0);
+	assert(sa1->get(0) == NULL);
 
 	delete s1;
 	delete s2;
@@ -54,6 +70,7 @@ void testStringArray() {
 
 	delete sa1;
 	delete sa2;
+	delete sa3;
 	printf("Passed StringArray tests\n");
 }
 
@@ -65,7 +82,26 @@ void testIntArray() {
 	IntArray* ia1 = new IntArray(1);
 	IntArray* ia2 = new IntArray(1);
 
+	ia1->add(0, 1);
+	ia2->add(0, 1);
+	assert(ia1->equals(ia2));
+	assert(ia1->size() == 1);
+	assert(ia1->get(0) == i1);
+	ia1->add(0, 2);
+	assert(ia1->size() == 1);
+	assert(ia1->get(0) == i2);
+	assert(!ia1->equals(ia2));
+	ia1->add(1, 2);
+	assert(ia1->size() == 2);
+	assert(ia1->get(0) == (i2));
+	assert(ia1->get(1) == (i2));
+	ia1->pushback(i3);
+	assert(ia1->size() == 4);
+	assert(ia1->get(2) == (i3));
 
+
+	ia1->remove(0);
+	assert(ia1->get(0) == nullptr);
 
 	delete ia1;
 	delete ia2;
