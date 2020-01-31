@@ -94,10 +94,10 @@ public:
         }
         if (array_[index]) {
             Object* result = array_[index];
-            array_[index] = NULL;
+            array_[index] = nullptr;
             return result;
         }
-        return NULL;
+        return nullptr;
         
     }
 
@@ -239,10 +239,10 @@ public:
         }
         if (array_[index]) {
             String* result = array_[index];
-            array_[index] = NULL;
+            array_[index] = nullptr;
             return result;
         }
-        return NULL;
+        return nullptr;
     }
 
     /**
@@ -379,7 +379,7 @@ public:
             array_[index] = nullptr;
             return result;
         }
-        return NULL;
+        return nullptr;
         
     }
 
@@ -515,10 +515,10 @@ public:
     {
         if (array_[index]) {
             float result = array_[index];
-            array_[index] = NULL;
+            array_[index] = nullptr;
             return result;
         }
-        return NULL;
+        return nullptr;
         
     }
 
@@ -656,7 +656,7 @@ public:
             array_[index] = nullptr;
             return result;
         }
-        return NULL;
+        return nullptr;
         
     }
 
