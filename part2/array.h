@@ -69,8 +69,9 @@ public:
      * Appends the object at the end of the array, making it grow
      */
     void pushback(Object *obj) {
+        size_t current_size = a_size_;
         allocate_space();
-        array_[a_size_] = obj;
+        array_[current_size] = obj;
         length_++;
     }
 
@@ -231,8 +232,9 @@ public:
      * Appends the object at the end of the array, making it grow
      */
     void pushback(String *obj) {
+        size_t current_size = a_size_;
         allocate_space();
-        array_[a_size_] = obj;
+        array_[current_size] = obj;
         length_++;
     }
 
@@ -387,8 +389,9 @@ public:
      * Appends the object at the end of the array, making it grow
      */
     void pushback(int obj) {
+        size_t current_size = a_size_;
         allocate_space();
-        array_[a_size_] = obj;
+        array_[current_size] = obj;
         length_++;
     }
 
@@ -540,8 +543,9 @@ public:
      * Appends the object at the end of the array, making it grow
      */
     void pushback(float obj) {
+        size_t current_size = a_size_;
         allocate_space();
-        array_[a_size_] = obj;
+        array_[current_size] = obj;
         length_++;
     }
 
@@ -693,8 +697,9 @@ public:
      * Appends the object at the end of the array, making it grow
      */
     void pushback(bool obj) {
+        size_t current_size = a_size_;
         allocate_space();
-        array_[a_size_] = obj;
+        array_[current_size] = obj;
         length_++;
     }
 
