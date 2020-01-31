@@ -47,10 +47,14 @@ public:
      * Allocates space to allow for growth
      */
     void allocate_space() {
+        size_t current = a_size_;
         a_size_ = a_size_ * 2;
         Object** temp = new Object*[a_size_];
-        for(size_t i = 0; i < a_size_; ++i) {
+        for(size_t i = 0; i < current; ++i) {
             temp[i] = array_[i];
+        }
+        for (size_t i = current; i < a_size_; ++i) {
+            temp[i] = 0;   
         }
         delete[] array_;
         array_ = temp;
@@ -95,7 +99,7 @@ public:
         }
         if (array_[index]) {
             Object* result = array_[index];
-            array_[index] = NULL;
+            array_[index] = 0;
             return result;
         }
         return NULL;
@@ -193,10 +197,14 @@ public:
      * Allocates space to allow for growth
      */
     void allocate_space() {
+        size_t current = a_size_;
         a_size_ = a_size_ * 2;
         String** temp = new String*[a_size_];
-        for(size_t i = 0; i < a_size_; ++i) {
+        for(size_t i = 0; i < current; ++i) {
             temp[i] = array_[i];
+        }
+        for (size_t i = current; i < a_size_; ++i) {
+            temp[i] = 0;   
         }
         delete[] array_;
         array_ = temp;
@@ -240,7 +248,7 @@ public:
         }
         if (array_[index]) {
             String* result = array_[index];
-            array_[index] = NULL;
+            array_[index] = 0;
             return result;
         }
         return NULL;
@@ -289,7 +297,10 @@ public:
     {
         size_t result = 0;
         for (size_t counter = 0; counter < a_size_; ++counter) {
-            result += array_[counter]->hash() * counter;
+            String* current = dynamic_cast<String*>(array_[counter]);
+            if (current) {
+                result += current->hash() * counter;
+            }
         }
         return result;
     }
@@ -333,10 +344,14 @@ public:
      * Allocates space to allow for growth
      */
     void allocate_space() {
+        size_t current = a_size_;
         a_size_ = a_size_ * 2;
         int* temp = new int[a_size_];
-        for(size_t i = 0; i < a_size_; ++i) {
+        for(size_t i = 0; i < current; ++i) {
             temp[i] = array_[i];
+        }
+        for (size_t i = current; i < a_size_; ++i) {
+            temp[i] = 0;   
         }
         delete[] array_;
         array_ = temp;
@@ -377,7 +392,7 @@ public:
     {
         if (array_[index]) {
             int result = array_[index];
-            array_[index] = NULL;
+            array_[index] = 0;
             return result;
         }
         return NULL;
@@ -427,7 +442,10 @@ public:
     {
         size_t result = 0;
         for (size_t counter = 0; counter < a_size_; ++counter) {
-            result += array_[counter] * counter;
+            if (array_[counter]) {
+                size_t increment = (counter + 1) * array_[counter];
+                result += increment;
+            }   
         }
         return result;
     }
@@ -471,10 +489,14 @@ public:
      * Allocates space to allow for growth
      */
     void allocate_space() {
+        size_t current = a_size_;
         a_size_ = a_size_ * 2;
         float* temp = new float[a_size_];
-        for(size_t i = 0; i < a_size_; ++i) {
+        for(size_t i = 0; i < current; ++i) {
             temp[i] = array_[i];
+        }
+        for (size_t i = current; i < a_size_; ++i) {
+            temp[i] = 0;   
         }
         delete[] array_;
         array_ = temp;
@@ -515,7 +537,7 @@ public:
     {
         if (array_[index]) {
             float result = array_[index];
-            array_[index] = NULL;
+            array_[index] = 0;
             return result;
         }
         return NULL;
@@ -536,6 +558,14 @@ public:
     }
 
     /**
+     * Checks to see if two floats are close by some arbitrary small epsilon
+     */
+
+    bool fequals_(float a, float b) {
+	    return fabs(a-b) < a * 0.001;
+    }  
+
+    /**
      * Checks to see if this array is equal to that one.
      * 
      * @arg other  the second array being compared to this one
@@ -547,7 +577,7 @@ public:
             size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != o->array_[counter]) {
+                if (!fequals_(array_[counter], o->array_[counter])) {
                     return false;
                 }
                 ++counter;
@@ -565,7 +595,10 @@ public:
     {
         size_t result = 0;
         for (size_t counter = 0; counter < a_size_; ++counter) {
-            result += array_[counter] * counter;
+            if (array_[counter]) {
+                size_t increment = (counter + 1) * array_[counter];
+                result += increment;
+            }   
         }
         return result;
     }
@@ -609,11 +642,15 @@ public:
      * Allocates space to allow for growth
      */
     void allocate_space() {
+        size_t current = a_size_;
         a_size_ = a_size_ * 2;
         bool* temp = new bool[a_size_];
-        for(size_t i = 0; i < a_size_; ++i) {
+        for(size_t i = 0; i < current; ++i) {
             temp[i] = array_[i];
         }
+        for (size_t i = current; i < a_size_; ++i) {
+            temp[i] = 0;   
+        }   
         delete[] array_;
         array_ = temp;
     }
@@ -653,7 +690,7 @@ public:
     {
         if (array_[index]) {
             bool result = array_[index];
-            array_[index] = NULL;
+            array_[index] = 0;
             return result;
         }
         return NULL;
@@ -703,7 +740,10 @@ public:
     {
         size_t result = 0;
         for (size_t counter = 0; counter < a_size_; ++counter) {
-            result += array_[counter] * counter;
+            if (array_[counter]) {
+                size_t increment = (counter + 1) * array_[counter];
+                result += increment;
+            }   
         }
         return result;
     }

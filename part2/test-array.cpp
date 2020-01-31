@@ -64,6 +64,7 @@ void testStringArray() {
 	sa1->pushback(s3);
 	assert(sa1->size() == 4);
 	assert(sa1->get(2)->equals(s3));
+	assert(sa1->hash() == s3->hash());
 
 	sa1->remove(0);
 	assert(sa1->get(0) == NULL);
@@ -79,36 +80,41 @@ void testStringArray() {
 }
 
 void testIntArray() {
-	int i1 = 1;
-	int i2 = 2;
-	int i3 = 3;
 
 	IntArray* ia1 = new IntArray(1);
 	IntArray* ia2 = new IntArray(1);
+	IntArray* ia3 = new IntArray(3);
 
 	ia1->add(0, 1);
 	ia2->add(0, 1);
 	assert(ia1->equals(ia2));
 	assert(ia1->size() == 1);
-	assert(ia1->get(0) == i1);
+	assert(ia1->get(0) == 1);
 	ia1->add(0, 2);
 	assert(ia1->size() == 1);
-	assert(ia1->get(0) == i2);
+	assert(ia1->get(0) == 2);
 	assert(!ia1->equals(ia2));
 	ia1->add(1, 2);
 	assert(ia1->size() == 2);
-	assert(ia1->get(0) == i2);
-	assert(ia1->get(1) == i2);
-	ia1->pushback(i3);
+	assert(ia1->get(0) == 2);
+	assert(ia1->get(1) == 2);
+	ia1->pushback(3);
 	assert(ia1->size() == 4);
-	assert(ia1->get(2) == (i3));
+	assert(ia1->get(2) == 3);
 
+	ia3->add(0, 2);
+	ia3->add(1, 2);
+	ia3->add(2, 3);
+
+	assert(ia1->equals(ia3));
+	assert(ia1->hash() == ia3->hash());
 
 	ia1->remove(0);
 	assert(ia1->get(0) == NULL);
 
 	delete ia1;
 	delete ia2;
+	delete ia3;
 	printf("Passed IntArray tests\n");
 }
 
@@ -116,6 +122,7 @@ void testBoolArray() {
 
 	BoolArray* ba1 = new BoolArray(1);
 	BoolArray* ba2 = new BoolArray(1);
+	BoolArray* ba3 = new BoolArray(3);
 
 	ba1->add(0, false);
 	ba2->add(0, false);
@@ -134,6 +141,11 @@ void testBoolArray() {
 	assert(ba1->size() == 4);
 	assert(ba1->get(2) == (false));
 
+	ba3->add(0, true);
+	ba3->add(1, true);
+	ba3->add(2, false);
+	assert(ba1->equals(ba3));
+	assert(ba1->hash() == ba3->hash());
 
 	ba1->remove(0);
 	assert(ba1->get(0) == NULL);
@@ -141,12 +153,14 @@ void testBoolArray() {
 
 	delete ba1;
 	delete ba2;
+	delete ba3;
 	printf("Passed BoolArray tests\n");
 }
 
 void testFloatArray() {
 	FloatArray* fa1 = new FloatArray(1);
 	FloatArray* fa2 = new FloatArray(1);
+	FloatArray* fa3 = new FloatArray(3);
 
 	fa1->add(0, 1.212);
 	fa2->add(0, 1.212);
@@ -165,12 +179,20 @@ void testFloatArray() {
 	assert(fa1->size() == 4);
 	assert(fequals_(fa1->get(2), 1.01));
 
+	fa3->add(0, 2.34);
+	fa3->add(1, 4.32);
+	fa3->add(2, 1.01);
+
+	assert(fa1->equals(fa3));
+	assert(fa1->hash() == fa3->hash());
+
 
 	fa1->remove(0);
 	assert(fa1->get(0) == NULL);
 
 	delete fa1;
 	delete fa2;
+	delete fa3;
 	printf("Passed FloatArray tests\n");
 }
 
