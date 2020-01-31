@@ -5,9 +5,9 @@
 #include <iostream>
 
 /**
- * ArrayTestFrame: this class represents a series of tests to verify that the Array class 
+ * ArrayTestFrame: this class represents a series of tests to verify that the Array class
  *                 works as inteded
- * 
+ *
  * authors: singh.kar@husky.neu.edu and haiber.ow@husky.neu.edu
  */
 class ArrayTestFrame
@@ -34,7 +34,7 @@ public:
     }
 
     /**
-     * Destructor for the ArrayTestFrame. 
+     * Destructor for the ArrayTestFrame.
      */
     ~ArrayTestFrame()
     {
@@ -50,7 +50,7 @@ public:
     }
 
     /**
-     * Sets the initial values for the fields in the class. 
+     * Sets the initial values for the fields in the class.
      */
     void setup()
     {
@@ -80,7 +80,7 @@ public:
     }
 
     /**
-     * Exits the program with an exit code for not succesful. 
+     * Exits the program with an exit code for not succesful.
      */
     void FAIL()
     {
@@ -114,9 +114,9 @@ public:
     }
 
     /**
-     * Series of tests to verify that the size method of the Array class works correctly. 
-     * 
-     * Prints "Size Test Passed" if all tests passed, exits otherwise. 
+     * Series of tests to verify that the size method of the Array class works correctly.
+     *
+     * Prints "Size Test Passed" if all tests passed, exits otherwise.
      */
     void testSize()
     {
@@ -128,8 +128,8 @@ public:
 
     /**
      * Series of tests to verify that the length method of the Array class works correctly.
-     * 
-     * Prints "Length Test Passed" if all tests passed, exits otherwise. 
+     *
+     * Prints "Length Test Passed" if all tests passed, exits otherwise.
      */
     void testLength()
     {
@@ -141,7 +141,7 @@ public:
 
     /**
      * Series of tests to verify that the add method of the Array class works correctly.
-     * 
+     *
      * Prints "Add Test Passed" if all tests passed, exits otherwise.
      */
     void testAdd()
@@ -155,7 +155,7 @@ public:
 
     /**
      * Series of tests to verify that the remove method of the Array class works correctly.
-     * 
+     *
      * Prints "Remove Tests Passed" if all tests passed, exits otherwise.
      */
     void testRemove()
@@ -165,15 +165,15 @@ public:
         t_true(tensize->get(4)->equals(hello));
 
         tensize->remove(4);
-        t_true(tensize->get(4)->equals(nothing));
+        t_true(tensize->get(4)->hash() == nothing->hash());
 
         OK("Remove Tests Passed");
     }
 
     /**
      * Series of tests to verify that the get method of the Array class works crrectly.
-     * 
-     * Prints "Get Tests Passed" if all tests passed, exits otherwise. 
+     *
+     * Prints "Get Tests Passed" if all tests passed, exits otherwise.
      */
     void testGet()
     {
@@ -184,8 +184,8 @@ public:
     }
 
     /**
-     * Test to verify that the Array class sorts an Array correctly if the sort method is called. 
-     * 
+     * Test to verify that the Array class sorts an Array correctly if the sort method is called.
+     *
      * Prints "Sort Test Passed" if the test is passed, exits otherwise.
      */
     void testSort()
@@ -206,9 +206,9 @@ public:
     }
 
     /**
-     * Test to verify that the Array class keeps a sorted list sorted if the sort method is called on it. 
-     * 
-     * Prints "Already Sorted Array Test Passed" if the test is passed, exits otherwise. 
+     * Test to verify that the Array class keeps a sorted list sorted if the sort method is called on it.
+     *
+     * Prints "Already Sorted Array Test Passed" if the test is passed, exits otherwise.
      */
     void testAlreadySorted()
     {
@@ -228,8 +228,8 @@ public:
     }
 
     /**
-     * Test to verify that the equals function can tell when two arrays are equal and when they are not. 
-     * 
+     * Test to verify that the equals function can tell when two arrays are equal and when they are not.
+     *
      * Prints "Equals Test Passed" if the test is passed, exits otherwise.
      */
     void testEquals()
@@ -242,7 +242,7 @@ public:
 
     /**
      * Test to verify that the hash function returns the correct hash value when called.
-     * 
+     *
      * Prints "Hash Test Passed" if the test is passed, exits otherwise.
      */
     void testHash()
@@ -255,7 +255,7 @@ public:
 };
 
 /**
- * Runs the tests in the ArrayTestFrame class. 
+ * Runs the tests in the ArrayTestFrame class.
  */
 int main()
 {
