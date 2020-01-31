@@ -12,10 +12,6 @@
 class Array : public Object
 {
 public:
-    Object** array_;
-    size_t a_size_;
-
-
     /**
      * Builds an array of the given size.
      * 
@@ -23,8 +19,7 @@ public:
      */
     Array(size_t size)
     {
-        array_= new Object*[size];
-        a_size_ = size;
+
     }
 
     /**
@@ -32,7 +27,7 @@ public:
      */
     ~Array()
     {
-        delete[] array_;
+
     }
 
     /**
@@ -40,33 +35,21 @@ public:
      */
     size_t size()
     {
-        return a_size_;
+
     }
 
     /**
      * Allocates space to allow for growth
      */
     void allocate_space() {
-        size_t current = a_size_;
-        a_size_ = a_size_ * 2;
-        Object** temp = new Object*[a_size_];
-        for(size_t i = 0; i < current; ++i) {
-            temp[i] = array_[i];
-        }
-        for (size_t i = current; i < a_size_; ++i) {
-            temp[i] = 0;   
-        }
-        delete[] array_;
-        array_ = temp;
+
     }
 
     /**
      * Appends the object at the end of the array, making it grow
      */
     void pushback(Object *obj) {
-        size_t current_size = a_size_;
-        allocate_space();
-        array_[current_size] = obj;
+
     }
 
     /**
@@ -77,13 +60,6 @@ public:
      */
     void add(size_t index, Object *obj)
     {   
-        if (index > a_size_) {
-            exit(1);
-        }
-        if (index == a_size_) {
-            allocate_space();
-        }
-        array_[index] = obj;
     
     } 
 
@@ -94,16 +70,7 @@ public:
      */
     Object* remove(size_t index)
     {
-        if (index >= a_size_) {
-            exit(1);
-        }
-        if (array_[index]) {
-            Object* result = array_[index];
-            array_[index] = 0;
-            return result;
-        }
-        return NULL;
-        
+    
     }
 
     /**
@@ -113,10 +80,7 @@ public:
      */
     Object *get(size_t index)
     {
-        if (index < a_size_) {
-            return array_[index];
-        }
-        exit(1);
+   
     }
 
     /**
@@ -126,20 +90,7 @@ public:
      */
     bool equals(Object *other)
     {
-        Array* o = dynamic_cast<Array*>(other);
-        if (o) {
-            size_t o_size = o->size();
-            int counter = 0;
-            while(counter < a_size_ && counter < o_size) {
-                if (!array_[counter]->equals(o->array_[counter])) {
-                    return false;
-                }
-                ++counter;
-            }
-            return true;
-        } else {
-            return false;
-        }
+    
     }
 
     /**
@@ -147,11 +98,7 @@ public:
      */
     size_t hash()
     {
-        size_t result = 0;
-        for (size_t counter = 0; counter < a_size_; ++counter) {
-            result += array_[counter]->hash() * counter;
-        }
-        return result;
+        
     }
 };
 
@@ -162,9 +109,6 @@ public:
 class StringArray : public Object
 {
 public:
-    String** array_;
-    size_t a_size_;
-
 
     /**
      * Builds an array of the given size.
@@ -173,8 +117,7 @@ public:
      */
     StringArray(size_t size)
     {
-        array_= new String*[size];
-        a_size_ = size;
+       
     }
 
     /**
@@ -182,7 +125,7 @@ public:
      */
     ~StringArray()
     {
-        delete[] array_;
+       
     }
 
     /**
@@ -190,33 +133,21 @@ public:
      */
     size_t size()
     {
-        return a_size_;
+        
     }
 
     /**
      * Allocates space to allow for growth
      */
     void allocate_space() {
-        size_t current = a_size_;
-        a_size_ = a_size_ * 2;
-        String** temp = new String*[a_size_];
-        for(size_t i = 0; i < current; ++i) {
-            temp[i] = array_[i];
-        }
-        for (size_t i = current; i < a_size_; ++i) {
-            temp[i] = 0;   
-        }
-        delete[] array_;
-        array_ = temp;
+
     }
 
     /**
      * Appends the object at the end of the array, making it grow
      */
     void pushback(String *obj) {
-        size_t current_size = a_size_;
-        allocate_space();
-        array_[current_size] = obj;
+
     }
 
     /**
@@ -227,13 +158,7 @@ public:
      */
     void add(size_t index, String *obj)
     {   
-        if (index > a_size_) {
-            exit(1);
-        }
-        if (index == a_size_) {
-            allocate_space();
-        }
-        array_[index] = obj;
+        
     } 
 
     /**
@@ -243,15 +168,7 @@ public:
      */
     String* remove(size_t index)
     {
-        if (index >= a_size_) {
-            exit(1);
-        }
-        if (array_[index]) {
-            String* result = array_[index];
-            array_[index] = 0;
-            return result;
-        }
-        return NULL;
+        
     }
 
     /**
@@ -261,10 +178,7 @@ public:
      */
     String *get(size_t index)
     {
-        if (index < a_size_) {
-            return array_[index];
-        }
-        exit(1);
+        
     }
 
     /**
@@ -274,20 +188,7 @@ public:
      */
     bool equals(Object *other)
     {
-        StringArray* o = dynamic_cast<StringArray*>(other);
-        if (o) {
-            size_t o_size = o->size();
-            int counter = 0;
-            while(counter < a_size_ && counter < o_size) {
-                if (!array_[counter]->equals(o->array_[counter])) {
-                    return false;
-                }
-                ++counter;
-            }
-            return true;
-        } else {
-            return false;
-        }
+        
     }
 
     /**
@@ -295,22 +196,14 @@ public:
      */
     size_t hash()
     {
-        size_t result = 0;
-        for (size_t counter = 0; counter < a_size_; ++counter) {
-            String* current = dynamic_cast<String*>(array_[counter]);
-            if (current) {
-                result += current->hash() * counter;
-            }
-        }
-        return result;
+        
     }
 };
 
 class IntArray : public Object
 {
 public:
-    int* array_;
-    size_t a_size_;
+    
 
 
     /**
@@ -320,8 +213,7 @@ public:
      */
     IntArray(size_t size)
     {
-        array_= new int[size];
-        a_size_ = size;
+        
     }
 
     /**
@@ -329,7 +221,7 @@ public:
      */
     ~IntArray()
     {
-        delete[] array_;
+    
     }
 
     /**
@@ -337,33 +229,21 @@ public:
      */
     size_t size()
     {
-        return a_size_;
+   
     }
 
     /**
      * Allocates space to allow for growth
      */
     void allocate_space() {
-        size_t current = a_size_;
-        a_size_ = a_size_ * 2;
-        int* temp = new int[a_size_];
-        for(size_t i = 0; i < current; ++i) {
-            temp[i] = array_[i];
-        }
-        for (size_t i = current; i < a_size_; ++i) {
-            temp[i] = 0;   
-        }
-        delete[] array_;
-        array_ = temp;
+    
     }
 
     /**
      * Appends the object at the end of the array, making it grow
      */
     void pushback(int obj) {
-        size_t current_size = a_size_;
-        allocate_space();
-        array_[current_size] = obj;
+    
     }
 
     /**
@@ -374,13 +254,7 @@ public:
      */
     void add(size_t index, int obj)
     {   
-        if (index > a_size_) {
-            exit(1);
-        }
-        if (index == a_size_) {
-            allocate_space();
-        }
-        array_[index] = obj;
+        
     } 
 
     /**
@@ -390,12 +264,6 @@ public:
      */
     int remove(size_t index)
     {
-        if (array_[index]) {
-            int result = array_[index];
-            array_[index] = 0;
-            return result;
-        }
-        return NULL;
         
     }
 
@@ -406,10 +274,6 @@ public:
      */
     int get(size_t index)
     {
-        if (index >= a_size_) {
-            exit(1);
-        }
-        return array_[index];
     }
 
     /**
@@ -419,20 +283,6 @@ public:
      */
     bool equals(Object *other)
     {
-        IntArray* o = dynamic_cast<IntArray*>(other);
-        if (o) {
-            size_t o_size = o->size();
-            size_t counter = 0;
-            while(counter < a_size_ && counter < o_size) {
-                if (this->array_[counter] != o->array_[counter]) {
-                    return false;
-                }
-                ++counter;
-            }
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -440,22 +290,12 @@ public:
      */
     size_t hash()
     {
-        size_t result = 0;
-        for (size_t counter = 0; counter < a_size_; ++counter) {
-            if (array_[counter]) {
-                size_t increment = (counter + 1) * array_[counter];
-                result += increment;
-            }   
-        }
-        return result;
     }
 };
 
 class FloatArray : public Object
 {
 public:
-    float* array_;
-    size_t a_size_;
 
 
     /**
@@ -465,8 +305,6 @@ public:
      */
     FloatArray(size_t size)
     {
-        array_= new float[size];
-        a_size_ = size;
     }
 
     /**
@@ -474,7 +312,7 @@ public:
      */
     ~FloatArray()
     {
-        delete[] array_;
+        
     }
 
     /**
@@ -482,33 +320,21 @@ public:
      */
     size_t size()
     {
-        return a_size_;
+    
     }
 
     /**
      * Allocates space to allow for growth
      */
     void allocate_space() {
-        size_t current = a_size_;
-        a_size_ = a_size_ * 2;
-        float* temp = new float[a_size_];
-        for(size_t i = 0; i < current; ++i) {
-            temp[i] = array_[i];
-        }
-        for (size_t i = current; i < a_size_; ++i) {
-            temp[i] = 0;   
-        }
-        delete[] array_;
-        array_ = temp;
+        
     }
 
     /**
      * Appends the object at the end of the array, making it grow
      */
     void pushback(float obj) {
-        size_t current_size = a_size_;
-        allocate_space();
-        array_[current_size] = obj;
+        
     }
 
     /**
@@ -519,13 +345,7 @@ public:
      */
     void add(size_t index, float obj)
     {   
-        if (index > a_size_) {
-            exit(1);
-        }
-        if (index == a_size_) {
-            allocate_space();
-        }
-        array_[index] = obj;
+    
     } 
 
     /**
@@ -535,12 +355,6 @@ public:
      */
     float remove(size_t index)
     {
-        if (array_[index]) {
-            float result = array_[index];
-            array_[index] = 0;
-            return result;
-        }
-        return NULL;
         
     }
 
@@ -551,10 +365,7 @@ public:
      */
     float get(size_t index)
     {
-        if (index < a_size_) {
-            return array_[index];
-        }
-        exit(1);
+        
     }
 
     /**
@@ -562,7 +373,7 @@ public:
      */
 
     bool fequals_(float a, float b) {
-	    return fabs(a-b) < a * 0.001;
+	    
     }  
 
     /**
@@ -572,20 +383,7 @@ public:
      */
     bool equals(Object *other)
     {
-        FloatArray* o = dynamic_cast<FloatArray*>(other);
-        if (o) {
-            size_t o_size = o->size();
-            int counter = 0;
-            while(counter < a_size_ && counter < o_size) {
-                if (!fequals_(array_[counter], o->array_[counter])) {
-                    return false;
-                }
-                ++counter;
-            }
-            return true;
-        } else {
-            return false;
-        }
+        
     }
 
     /**
@@ -593,14 +391,7 @@ public:
      */
     size_t hash()
     {
-        size_t result = 0;
-        for (size_t counter = 0; counter < a_size_; ++counter) {
-            if (array_[counter]) {
-                size_t increment = (counter + 1) * array_[counter];
-                result += increment;
-            }   
-        }
-        return result;
+
     }
 };
 
@@ -618,8 +409,6 @@ public:
      */
     BoolArray(size_t size)
     {
-        array_= new bool[size];
-        a_size_ = size;
     }
 
     /**
@@ -627,7 +416,7 @@ public:
      */
     ~BoolArray()
     {
-        delete[] array_;
+    
     }
 
     /**
@@ -635,33 +424,20 @@ public:
      */
     size_t size()
     {
-        return a_size_;
+    
     }
 
     /**
      * Allocates space to allow for growth
      */
     void allocate_space() {
-        size_t current = a_size_;
-        a_size_ = a_size_ * 2;
-        bool* temp = new bool[a_size_];
-        for(size_t i = 0; i < current; ++i) {
-            temp[i] = array_[i];
-        }
-        for (size_t i = current; i < a_size_; ++i) {
-            temp[i] = 0;   
-        }   
-        delete[] array_;
-        array_ = temp;
+    
     }
 
     /**
      * Appends the object at the end of the array, making it grow
      */
     void pushback(bool obj) {
-        size_t current_size = a_size_;
-        allocate_space();
-        array_[current_size] = obj;
     }
 
     /**
@@ -672,13 +448,6 @@ public:
      */
     void add(size_t index, bool obj)
     {   
-        if (index > a_size_) {
-            exit(1);
-        }
-        if (index == a_size_) {
-            allocate_space();
-        }
-        array_[index] = obj;
     } 
 
     /**
@@ -688,12 +457,6 @@ public:
      */
     bool remove(size_t index)
     {
-        if (array_[index]) {
-            bool result = array_[index];
-            array_[index] = 0;
-            return result;
-        }
-        return NULL;
         
     }
 
@@ -704,10 +467,6 @@ public:
      */
     bool get(size_t index)
     {
-        if (index < a_size_) {
-            return array_[index];
-        }
-        exit(1);
     }
 
     /**
@@ -717,20 +476,6 @@ public:
      */
     bool equals(Object *other)
     {
-        BoolArray* o = dynamic_cast<BoolArray*>(other);
-        if (o) {
-            size_t o_size = o->size();
-            int counter = 0;
-            while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != o->array_[counter]) {
-                    return false;
-                }
-                ++counter;
-            }
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -738,13 +483,5 @@ public:
      */
     size_t hash()
     {
-        size_t result = 0;
-        for (size_t counter = 0; counter < a_size_; ++counter) {
-            if (array_[counter]) {
-                size_t increment = (counter + 1) * array_[counter];
-                result += increment;
-            }   
-        }
-        return result;
     }
 };
