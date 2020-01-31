@@ -376,7 +376,7 @@ public:
     {
         if (array_[index]) {
             int result = array_[index];
-            array_[index] = NULL;
+            array_[index] = nullptr;
             return result;
         }
         return NULL;
@@ -403,12 +403,13 @@ public:
      */
     bool equals(Object *other)
     {
-        IntArray* o = dynamic_cast<IntArray*>(o);
+        IntArray* o = dynamic_cast<IntArray*>(other);
         if (o) {
             size_t o_size = o->size();
-            int counter = 0;
+            size_t counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != o->array_[counter]) {
+                printf("%d, %d\n", this->array_[counter], o->get(counter));
+                if (this->array_[counter] != o->array_[counter]) {
                     return false;
                 }
                 ++counter;
@@ -541,7 +542,7 @@ public:
      */
     bool equals(Object *other)
     {
-        FloatArray* o = dynamic_cast<FloatArray*>(o);
+        FloatArray* o = dynamic_cast<FloatArray*>(other);
         if (o) {
             size_t o_size = o->size();
             int counter = 0;
@@ -652,7 +653,7 @@ public:
     {
         if (array_[index]) {
             bool result = array_[index];
-            array_[index] = NULL;
+            array_[index] = nullptr;
             return result;
         }
         return NULL;
@@ -679,7 +680,7 @@ public:
      */
     bool equals(Object *other)
     {
-        BoolArray* o = dynamic_cast<BoolArray*>(o);
+        BoolArray* o = dynamic_cast<BoolArray*>(other);
         if (o) {
             size_t o_size = o->size();
             int counter = 0;
