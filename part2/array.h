@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "string.h"
 #include <stdlib.h>
 
 /**
@@ -90,8 +91,10 @@ public:
         if (array_[index]) { 
             delete array_[index];
             length_--;
+        }
         array_[index] = obj;
         length_++;
+    
     } 
 
     /**
@@ -107,7 +110,7 @@ public:
         if (array_[index]) {
             Object* result = array_[index];
             array_[index] = NULL;
-            length--;
+            length_--;
             return result;
         }
         return NULL;
@@ -132,13 +135,14 @@ public:
      * 
      * @arg other  the second array being compared to this one
      */
-    bool equals(Array *other)
+    bool equals(Object *other)
     {
-        if (other && other->length() == this->length()) {
-            size_t o_size = other->size();
+        Array* o = dynamic_cast<Array*>(other);
+        if (o && o->length() == this->length()) {
+            size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (!array_[counter]->equals(other->array_[counter])) {
+                if (!array_[counter]->equals(o->array_[counter])) {
                     return false;
                 }
                 ++counter;
@@ -155,7 +159,7 @@ public:
     size_t hash()
     {
         size_t result = 0;
-        for (int counter = 0; counter < a_size_; ++counter) {
+        for (size_t counter = 0; counter < a_size_; ++counter) {
             result += array_[counter]->hash() * counter;
         }
         return result;
@@ -226,7 +230,7 @@ public:
     /**
      * Appends the object at the end of the array, making it grow
      */
-    void pushback(Object *obj) {
+    void pushback(String *obj) {
         allocate_space();
         array_[a_size_] = obj;
         length_++;
@@ -238,7 +242,7 @@ public:
      * @arg index  the index where the object will be added
      * @arg obj  the Object being added to the array
      */
-    void add(size_t index, Object *obj)
+    void add(size_t index, String *obj)
     {   
         if (index > a_size_) {
             exit(1);
@@ -249,6 +253,7 @@ public:
         if (array_[index]) { 
             delete array_[index];
             length_--;
+        }
         array_[index] = obj;
         length_++;
     } 
@@ -264,9 +269,9 @@ public:
             exit(1);
         }
         if (array_[index]) {
-            Object* result = array_[index];
+            String* result = array_[index];
             array_[index] = NULL;
-            length--;
+            length_--;
             return result;
         }
         return NULL;
@@ -286,12 +291,35 @@ public:
     }
 
     /**
+     * Checks to see if this array is equal to that one.
+     * 
+     * @arg other  the second array being compared to this one
+     */
+    bool equals(Object *other)
+    {
+        StringArray* o = dynamic_cast<StringArray*>(other);
+        if (o && o->length() == this->length()) {
+            size_t o_size = o->size();
+            int counter = 0;
+            while(counter < a_size_ && counter < o_size) {
+                if (!array_[counter]->equals(o->array_[counter])) {
+                    return false;
+                }
+                ++counter;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Returns the hash value for this Array.
      */
     size_t hash()
     {
         size_t result = 0;
-        for (int counter = 0; counter < a_size_; ++counter) {
+        for (size_t counter = 0; counter < a_size_; ++counter) {
             result += array_[counter]->hash() * counter;
         }
         return result;
@@ -358,7 +386,7 @@ public:
     /**
      * Appends the object at the end of the array, making it grow
      */
-    void pushback(Object *obj) {
+    void pushback(int obj) {
         allocate_space();
         array_[a_size_] = obj;
         length_++;
@@ -370,7 +398,7 @@ public:
      * @arg index  the index where the object will be added
      * @arg obj  the Object being added to the array
      */
-    int add(size_t index, int obj)
+    void add(size_t index, int obj)
     {   
         if (index > a_size_) {
             exit(1);
@@ -380,6 +408,7 @@ public:
         }
         if (array_[index]) { 
             length_--;
+        }
         array_[index] = obj;
         length_++;
     } 
@@ -392,9 +421,9 @@ public:
     int remove(size_t index)
     {
         if (array_[index]) {
-            Object* result = array_[index];
+            int result = array_[index];
             array_[index] = NULL;
-            length--;
+            length_--;
             return result;
         }
         return NULL;
@@ -421,11 +450,12 @@ public:
      */
     bool equals(Object *other)
     {
-        if (other && other->length() == this->length()) {
-            size_t o_size = other->size();
+        IntArray* o = dynamic_cast<IntArray*>(o);
+        if (o && o->length() == this->length()) {
+            size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != other->array_[counter]) {
+                if (array_[counter] != o->array_[counter]) {
                     return false;
                 }
                 ++counter;
@@ -442,14 +472,14 @@ public:
     size_t hash()
     {
         size_t result = 0;
-        for (int counter = 0; counter < a_size_; ++counter) {
+        for (size_t counter = 0; counter < a_size_; ++counter) {
             result += array_[counter] * counter;
         }
         return result;
     }
 };
 
-class FloatArray : public Array
+class FloatArray : public Object
 {
 public:
     float* array_;
@@ -464,7 +494,7 @@ public:
      */
     FloatArray(size_t size)
     {
-        array_= new float*[size];
+        array_= new float[size];
         a_size_ = size;
         length_ = 0;
     }
@@ -498,7 +528,7 @@ public:
      */
     void allocate_space() {
         a_size_ = a_size_ * 2;
-        int* temp = new int[a_size_];
+        float* temp = new float[a_size_];
         for(size_t i = 0; i < a_size_; ++i) {
             temp[i] = array_[i];
         }
@@ -509,7 +539,7 @@ public:
     /**
      * Appends the object at the end of the array, making it grow
      */
-    void pushback(Object *obj) {
+    void pushback(float obj) {
         allocate_space();
         array_[a_size_] = obj;
         length_++;
@@ -521,7 +551,7 @@ public:
      * @arg index  the index where the object will be added
      * @arg obj  the Object being added to the array
      */
-    void add(size_t index, bool obj)
+    void add(size_t index, float obj)
     {   
         if (index > a_size_) {
             exit(1);
@@ -531,6 +561,7 @@ public:
         }
         if (array_[index]) { 
             length_--;
+        }
         array_[index] = obj;
         length_++;
     } 
@@ -543,9 +574,9 @@ public:
     float remove(size_t index)
     {
         if (array_[index]) {
-            bool result = array_[index];
+            float result = array_[index];
             array_[index] = NULL;
-            length--;
+            length_--;
             return result;
         }
         return NULL;
@@ -572,11 +603,12 @@ public:
      */
     bool equals(Object *other)
     {
-        if (other && other->length() == this->length()) {
-            size_t o_size = other->size();
+        FloatArray* o = dynamic_cast<FloatArray*>(o);
+        if (o && o->length() == this->length()) {
+            size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != other->array_[counter]) {
+                if (array_[counter] != o->array_[counter]) {
                     return false;
                 }
                 ++counter;
@@ -593,17 +625,17 @@ public:
     size_t hash()
     {
         size_t result = 0;
-        for (int counter = 0; counter < a_size_; ++counter) {
+        for (size_t counter = 0; counter < a_size_; ++counter) {
             result += array_[counter] * counter;
         }
         return result;
     }
 };
 
-class BoolArray : public Array
+class BoolArray : public Object
 {
 public:
-    bool** array_;
+    bool* array_;
     size_t a_size_;
     size_t length_;
 
@@ -615,7 +647,7 @@ public:
      */
     BoolArray(size_t size)
     {
-        array_= new bool*[size];
+        array_= new bool[size];
         a_size_ = size;
         length_ = 0;
     }
@@ -649,7 +681,7 @@ public:
      */
     void allocate_space() {
         a_size_ = a_size_ * 2;
-        int* temp = new int[a_size_];
+        bool* temp = new bool[a_size_];
         for(size_t i = 0; i < a_size_; ++i) {
             temp[i] = array_[i];
         }
@@ -660,7 +692,7 @@ public:
     /**
      * Appends the object at the end of the array, making it grow
      */
-    void pushback(Object *obj) {
+    void pushback(bool obj) {
         allocate_space();
         array_[a_size_] = obj;
         length_++;
@@ -682,6 +714,7 @@ public:
         }
         if (array_[index]) { 
             length_--;
+        }
         array_[index] = obj;
         length_++;
     } 
@@ -696,7 +729,7 @@ public:
         if (array_[index]) {
             bool result = array_[index];
             array_[index] = NULL;
-            length--;
+            length_--;
             return result;
         }
         return NULL;
@@ -708,7 +741,7 @@ public:
      * 
      * @arg index  the index of the Object being returned
      */
-     bool get(size_t index)
+    bool get(size_t index)
     {
         if (index < a_size_) {
             return array_[index];
@@ -723,11 +756,12 @@ public:
      */
     bool equals(Object *other)
     {
-        if (other && other->length() == this->length()) {
-            size_t o_size = other->size();
+        BoolArray* o = dynamic_cast<BoolArray*>(o);
+        if (o && o->length() == this->length()) {
+            size_t o_size = o->size();
             int counter = 0;
             while(counter < a_size_ && counter < o_size) {
-                if (array_[counter] != other->array_[counter]) {
+                if (array_[counter] != o->array_[counter]) {
                     return false;
                 }
                 ++counter;
@@ -744,7 +778,7 @@ public:
     size_t hash()
     {
         size_t result = 0;
-        for (int counter = 0; counter < a_size_; ++counter) {
+        for (size_t counter = 0; counter < a_size_; ++counter) {
             result += array_[counter] * counter;
         }
         return result;
